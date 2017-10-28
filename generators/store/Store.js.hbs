@@ -1,0 +1,13 @@
+import {types} from 'mobx-state-tree';
+
+const {{properCase name}}Store = types.model('{{properCase name}}Store', {
+  name: types.string,
+}).views(self => {
+  return {};
+}).actions(self => {
+  return {};
+});
+
+export default {{properCase name}}Store.create({
+  name: 'Test',
+});
