@@ -13,17 +13,19 @@ import styles from './styles';
 class Login extends Component {
 
   render() {
-    const {Auth} = this.props;
+    const {Auth, LoginForm, onLoginPress} = this.props;
 
     return (
       <View style={styles.container}>
-        <Text>Login Screen</Text>
         {Auth.loginError && <Text>Error : {i18n.t(Auth.loginError)}</Text> }
+        <View style={styles.formWrapper}>
+          {LoginForm}
+        </View>
         <Button
-          onPress={() => Auth.login()}
+          onPress={onLoginPress}
           loading={Auth.isLoading}
         >
-          <Text>TEST</Text>
+          <Text>Login</Text>
         </Button>
       </View>
     );

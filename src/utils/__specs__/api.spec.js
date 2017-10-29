@@ -4,7 +4,6 @@ import fetch from 'fetch-mock';
 import HttpError from 'standard-http-error';
 
 import * as api from '../api';
-import * as configuration from '../configuration';
 
 const API_ROOT = 'https://mock.getpepperoni.com';
 const SIMPLE_ENDPOINT = '/endpoint';
@@ -19,7 +18,6 @@ describe('API', () => {
     global.Promise = require.requireActual('promise');
     // stub AsyncStorage.getItem
     require.requireActual('react-native').AsyncStorage.getItem = () => Promise.resolve(1);
-    configuration.setConfiguration('API_ROOT', API_ROOT);
     fetch
       .mock(API_ROOT + SIMPLE_ENDPOINT, {status: 200, body: SIMPLE_RESPONSE})
       .mock(API_ROOT + ERROR_ENDPOINT, {status: 400,body: {message: 'You did bad.'}})
@@ -29,7 +27,6 @@ describe('API', () => {
 
   afterEach(() => {
     fetch.restore();
-    configuration.unsetConfiguration('API_ROOT');
   });
 
   // generate basic tests for basic HTTP methods
@@ -44,24 +41,24 @@ describe('API', () => {
 
     describe(method, () => {
 
-      it('should fetch() the given endpoint', async () => {
+      it('should fetch() the given endpoint', async() => {
         await apiMethod(SIMPLE_ENDPOINT);
         expect(fetch.lastUrl()).toBe(`${API_ROOT}${SIMPLE_ENDPOINT}`);
       });
 
       if (method === 'put' || method === 'post') {
-        it('should send the body for PUT and POST requests', async () => {
+        it('should send the body for PUT and POST requests', async() => {
           await apiMethod(SIMPLE_ENDPOINT);
           expect(fetch.lastOptions().body).toBe(JSON.stringify(body));
         });
       }
 
-      it('should return the response body when calling a valid JSON endpoint', async () => {
+      it('should return the response body when calling a valid JSON endpoint', async() => {
         expect(await apiMethod(SIMPLE_ENDPOINT)).toEqual(SIMPLE_RESPONSE);
         expect(fetch.called()).toBe(true);
       });
 
-      it('should throw when endpoint returns HTTP 4xx error', async () => {
+      it('should throw when endpoint returns HTTP 4xx error', async() => {
         const error = await getError(() => apiMethod(ERROR_ENDPOINT));
         expect(error instanceof HttpError).toBe(true);
         expect(error.code).toBe(400);
@@ -69,7 +66,7 @@ describe('API', () => {
         expect(fetch.called()).toBe(true);
       });
 
-      it('should throw when server returns a HTTP 5xx error', async () => {
+      it('should throw when server returns a HTTP 5xx error', async() => {
         const error = await getError(() => apiMethod(FAILING_ENDPOINT));
         expect(error instanceof HttpError).toBe(true);
         expect(error.code).toBe(500);
@@ -80,11 +77,11 @@ describe('API', () => {
   }
 
   describe('url', () => {
-    it('generates a full url from a path using API_ROOT configuration value', async () => {
+    it('generates a full url from a path using API_ROOT configuration value', async() => {
       expect(api.url('foobar')).toEqual(API_ROOT + '/foobar');
     });
 
-    it('generates a full url with leading forward slash', async () => {
+    it('generates a full url with leading forward slash', async() => {
       expect(api.url('/foobar')).toEqual(API_ROOT + '/foobar');
     });
   });
@@ -111,7 +108,7 @@ describe('API', () => {
       api.errors.off('*', spyAllErrors);
     });
 
-    it('notifies about errors on error-specific channel', async () => {
+    it('notifies about errors on error-specific channel', async() => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // 403 called, matching error code
@@ -119,7 +116,7 @@ describe('API', () => {
       expect(spy403Errors).toBeCalledWith(expectedArgs);
     });
 
-    it('notifies about errors on generic * channel', async () => {
+    it('notifies about errors on generic * channel', async() => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // always matches
@@ -127,7 +124,7 @@ describe('API', () => {
       expect(spyAllErrors).toBeCalledWith(expectedArgs, 403);
     });
 
-    it('doesn\'t notify about errors on other channels', async () => {
+    it('doesn\'t notify about errors on other channels', async() => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // never called, unmatching error code

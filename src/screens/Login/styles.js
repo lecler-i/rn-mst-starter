@@ -7,7 +7,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red'
+    backgroundColor: 'white'
+  },
+  formWrapper: {
+    alignSelf: 'stretch',
+    margin: 16
   }
 });
 

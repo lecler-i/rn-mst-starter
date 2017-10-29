@@ -4,8 +4,8 @@ const testAuth = {
   title: 'test'
 };
 
-it('testing auth store', () => {
+it('testing auth store', async() => {
 
-  expect(true).toBe(false);
+  expect(await AuthStore.isLoggedIn()).toBe(false);
 
 });
