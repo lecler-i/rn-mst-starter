@@ -31,13 +31,13 @@ module.exports = function(plop) {
         type: 'add',
         path: 'src/screens/{{properCase name}}/{{properCase name}}.js',
         templateFile: 'generators/screen/ScreenView.js.hbs'
+      },
+      {
+        type: 'modify',
+        path: 'src/App.js',
+        pattern: /\/\/ ## Generated Screens Imports/gi,
+        template: '// ## Generated Screens Imports\nimport {{properCase name}}Screen from \'./screens/{{properCase name}}\';'
       }
-      /* { */
-      // type: 'modify',
-      // path: 'src/redux/reducer.js',
-      // pattern: /\/\/ ## Generator Reducer Imports/gi,
-      // template: '// ## Generator Reducer Imports\r\nimport {{properCase name}}Reducer from \'../modules/{{camelCase name}}/{{properCase name}}State\';'
-      // },
       // {
       // type: 'modify',
       // path: 'src/redux/reducer.js',
