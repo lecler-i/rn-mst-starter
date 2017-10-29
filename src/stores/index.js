@@ -10,7 +10,7 @@ import Todos from './todos';
 
 const stores = {
   // ## Generated Stores Includes
-  AuthStore,
+  Auth: AuthStore,
 
   Todos
 };

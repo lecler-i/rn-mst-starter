@@ -7,6 +7,13 @@ const EventEmitter = require('event-emitter');
 
 const TIMEOUT = 6000;
 
+export class ApiError extends Error {
+  constructor(...args) {
+    super(...args);
+    this.name = 'APIError';
+  }
+}
+
 /**
  * All HTTP errors are emitted on this channel for interested listeners
  */
@@ -71,7 +78,7 @@ export async function request(method, path, body, suppressRedBox) {
   }
   catch (error) {
     if (!suppressRedBox) {
-      logError(error, url(path), method);
+      logError(error, path, method);
     }
     throw error;
   }
@@ -80,20 +87,19 @@ export async function request(method, path, body, suppressRedBox) {
 /**
  * Takes a relative path and makes it a full URL to API server
  */
-export function url(path) {
-  const apiRoot = getConfiguration('API_ROOT');
-  return path.indexOf('/') === 0
-    ? apiRoot + path
-    : apiRoot + '/' + path;
-}
-
+/* export function url(path) { */
+// const apiRoot = getConfiguration('API_ROOT');
+// return path.indexOf('/') === 0
+// ? apiRoot + path
+// : apiRoot + '/' + path;
+// }
+/*  */
 /**
  * Constructs and fires a HTTP request
  */
-async function sendRequest(method, path, body) {
+async function sendRequest(method, endpoint, body) {
 
   try {
-    const endpoint = url(path);
     const token = await getAuthenticationToken();
     const headers = getRequestHeaders(body, token);
     const options = body
@@ -112,13 +118,13 @@ async function sendRequest(method, path, body) {
 async function handleResponse(path, response) {
   try {
     const status = response.status;
-
+    console.log('Handling Response', status);
     // `fetch` promises resolve even if HTTP status indicates failure. Reroute
     // promise flow control to interpret error responses as failures
-    if (status >= 400) {
+    if (status != 200) {
       const message = await getErrorMessageSafely(response);
       const error = new HttpError(status, message);
-
+      console.log('Error msg :', message);
       // emit events on error channel, one for status-specific errors and other for all errors
       errors.emit(status.toString(), {path, message: error.message});
       errors.emit('*', {path, message: error.message}, status);
@@ -128,6 +134,18 @@ async function handleResponse(path, response) {
 
     // parse response text
     const responseBody = await response.text();
+    const body = responseBody ? JSON.parse(responseBody) : null;
+
+    if (body && body.status) {
+      const message = body.content.error || 'UNKNOWN_ERROR';
+      const error = new ApiError(message);
+      console.log('Error msg :', message);
+      // emit events on error channel, one for status-specific errors and other for all errors
+      errors.emit(status.toString(), {path, message: error.message});
+      errors.emit('*', {path, message: error.message}, status);
+
+      throw error;
+    }
     return {
       status: response.status,
       headers: response.headers,
@@ -161,8 +179,9 @@ async function getErrorMessageSafely(response) {
 
     // Optimal case is JSON with a defined message property
     const payload = JSON.parse(body);
-    if (payload && payload.message) {
-      return payload.message;
+    console.log('Get error payload :', payload);
+    if (payload && payload.content && payload.content.error) {
+      return payload.content.error;
     }
 
     // Should that fail, return the whole response body as text
@@ -192,7 +211,7 @@ function timeout(promise, ms) {
 async function bodyOf(requestPromise) {
   try {
     const response = await requestPromise;
-    return response.body;
+    return response.body.content;
   } catch (e) {
     throw e;
   }
