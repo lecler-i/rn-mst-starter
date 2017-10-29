@@ -1,19 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
-  StyleSheet,
-  View
+  View,
+  Text
 } from 'react-native';
+import {inject, observer} from 'mobx-react/native';
 
+import i18n from '../../utils/i18n';
 import styles from './styles';
 
+@inject() @observer
 class {{properCase name }} extends Component {
-  static displayName = '{{properCase name }}';
 
   render() {
     return (
       <View style={styles.container}>
-
+        <Text>{{properCase name}} Screen</Text>
       </View>
     );
   }
