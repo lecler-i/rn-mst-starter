@@ -1,4 +1,5 @@
 import {types, flow} from 'mobx-state-tree';
+import remotedev from 'mobx-remotedev';
 
 import TTRSS from '../lib/TTRSS';
 
@@ -6,7 +7,8 @@ const AuthStore = types.model('AuthStore', {
   accessToken: types.maybe(types.string),
   username: types.maybe(types.string),
   password: types.maybe(types.string),
-  loginError: types.maybe(types.string)
+  loginError: types.maybe(types.string),
+  isLoading: types.optional(types.boolean, false)
 }).views(self => {
   return {
   };
@@ -26,6 +28,7 @@ const AuthStore = types.model('AuthStore', {
     }),
     login: flow(function* login(payload) {
       self.loginError = null;
+      self.isLoading = true;
       self.accessToken = null;
       if (payload) {
         self.username = payload.username;
@@ -33,27 +36,27 @@ const AuthStore = types.model('AuthStore', {
       }
       if (!self.username || !self.password) {
         self.accessToken = null;
-        self.loginError = 'missing-login-password';
+        self.loginError = 'auth.login.missing-login-password';
+        self.isLoading = false;
         return false;
       }
       try {
-        console.log('Sending stuff ', self.login, self.password);
         const {session_id} = yield TTRSS.login(self.username, self.password);
         self.accesssToken = session_id;
-        console.log(self.accessToken);
+        self.isLoading = false;
         return true;
       }
       catch (e) {
-        console.error('Toto :', e.message);
-        self.loginError = e.message;
-        //self.password = null;
+        self.loginError = `api.error.${e.message}`;
+        self.isLoading = false;
+        self.password = null;
         return false;
       }
     })
   };
 });
 
-export default AuthStore.create({
+export default remotedev(AuthStore.create({
   username: 'tata',
-  password: 'prout'
-});
+  password: ''
+}));

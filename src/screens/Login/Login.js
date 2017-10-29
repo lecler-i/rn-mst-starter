@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {
   View,
-  Text,
-  Button
+  Text
 } from 'react-native';
 import {observer, inject} from 'mobx-react/native';
 
+import Button from '../../components/ui/Button';
 import i18n from '../../utils/i18n';
 import styles from './styles';
 
@@ -18,13 +18,13 @@ class Login extends Component {
     return (
       <View style={styles.container}>
         <Text>Login Screen</Text>
-        {Auth.loginError && <Text>Error : {i18n.t(`Api.errors.${Auth.loginError}`)}</Text> }
+        {Auth.loginError && <Text>Error : {i18n.t(Auth.loginError)}</Text> }
         <Button
           onPress={() => Auth.login()}
-          title='Login'
-          color='#841584'
-          accessibilityLabel='Learn more about this purple button'
-        />
+          loading={Auth.isLoading}
+        >
+          <Text>TEST</Text>
+        </Button>
       </View>
     );
   }

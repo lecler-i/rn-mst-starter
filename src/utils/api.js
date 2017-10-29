@@ -1,7 +1,4 @@
-import Promise from 'bluebird';
 import HttpError from 'standard-http-error';
-import {getConfiguration} from '../utils/configuration';
-import {getAuthenticationToken} from '../utils/authentication';
 
 const EventEmitter = require('event-emitter');
 
@@ -100,8 +97,7 @@ export async function request(method, path, body, suppressRedBox) {
 async function sendRequest(method, endpoint, body) {
 
   try {
-    const token = await getAuthenticationToken();
-    const headers = getRequestHeaders(body, token);
+    const headers = getRequestHeaders(body);
     const options = body
       ? {method, headers, body: JSON.stringify(body)}
       : {method, headers};
