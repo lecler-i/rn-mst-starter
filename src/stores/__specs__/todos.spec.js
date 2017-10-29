@@ -15,10 +15,8 @@ it('can create new todo', () => {
 
 it('can toggle and untoggle a todo', () => {
   const todo = todos.addTodo(testTodo);
-  console.log(todo.completed);
 
   todo.toggle();
-  console.log(todo.completed);
   expect(todo.completed).toBe(true);
 
   expect(todos.completedTodos.length).toBe(1);
