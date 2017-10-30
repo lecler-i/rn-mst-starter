@@ -2,6 +2,7 @@
 // import {AsyncStorage} from 'react-native';
 
 // ## Generated Stores Imports
+import NavigationStore from './Navigation';
 import AuthStore from './Auth';
 
 import Todos from './todos';
@@ -10,9 +11,10 @@ import Todos from './todos';
 
 const stores = {
   // ## Generated Stores Includes
+  NavigationStore,
   Auth: AuthStore,
 
-  Todos
+  Todos,
 };
 
 // you can hydrate stores here with mobx-persist

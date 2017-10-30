@@ -1,7 +1,4 @@
-![Pepperoni - Empowered by Futurice](/docs/pepperoni.png?v=2)
-Futurice React Native Starter Kit
-===
-
+## Hello world
 [![Join the chat at https://gitter.im/futurice/pepperoni-app-kit](https://badges.gitter.im/futurice/pepperoni-app-kit.svg)](https://gitter.im/futurice/pepperoni-app-kit?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/futurice/pepperoni-app-kit.svg?branch=master)](https://travis-ci.org/futurice/pepperoni-app-kit)
 [![React Native](https://img.shields.io/badge/react%20native-0.49.3-brightgreen.svg)](https://github.com/facebook/react-native)

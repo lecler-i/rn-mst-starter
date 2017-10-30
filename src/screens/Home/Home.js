@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
-import {inject} from 'mobx-react/native';
+import React, { Component } from 'react';
+import { inject } from 'mobx-react/native';
 import PropTypes from 'prop-types';
 import {
   View,
-  Text
+  Text,
 } from 'react-native';
 
 import styles from './styles';

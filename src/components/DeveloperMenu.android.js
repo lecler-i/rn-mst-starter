@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import * as snapshot from '../utils/snapshot';
 
 import {
   View,
   Text,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 /**
@@ -18,11 +18,11 @@ class DeveloperMenu extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {visible: false};
+    this.state = { visible: false };
   }
 
   showDeveloperMenu = () => {
-    this.setState({isVisible: true});
+    this.setState({ isVisible: true });
   };
 
   clearState = async () => {
@@ -32,7 +32,7 @@ class DeveloperMenu extends Component {
   };
 
   closeMenu = () => {
-    this.setState({isVisible: false});
+    this.setState({ isVisible: false });
   };
 
   renderMenuItem(text, onPress) {
@@ -41,7 +41,7 @@ class DeveloperMenu extends Component {
         key={text}
         onPress={onPress}
         style={styles.menuItem}
-        >
+      >
         <Text style={styles.menuItemText}>{text}</Text>
       </TouchableOpacity>
     );
@@ -57,13 +57,13 @@ class DeveloperMenu extends Component {
         <TouchableOpacity
           style={styles.circle}
           onPress={this.showDeveloperMenu}
-          />
+        />
       );
     }
 
     const buttons = [
       this.renderMenuItem('Clear state', this.clearState),
-      this.renderMenuItem('Cancel', this.closeMenu)
+      this.renderMenuItem('Cancel', this.closeMenu),
     ];
 
     return (
@@ -82,14 +82,14 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#fff'
+    backgroundColor: '#fff',
   },
   menu: {
     backgroundColor: 'white',
     position: 'absolute',
     left: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
   menuItem: {
     flex: 1,
@@ -98,11 +98,11 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderTopColor: '#eee',
     padding: 10,
-    height: 60
+    height: 60,
   },
   menuItemText: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default DeveloperMenu;

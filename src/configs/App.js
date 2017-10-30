@@ -1,5 +1,5 @@
 export default {
   navbarProps: {
-    height: 56
-  }
+    height: 56,
+  },
 };

@@ -5,7 +5,7 @@ import en from '../configs/locales/en';
 I18n.fallbacks = true;
 
 I18n.translations = {
-  en
+  en,
 };
 
 export default I18n;

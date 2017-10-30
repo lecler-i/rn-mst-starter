@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import * as snapshot from '../utils/snapshot';
 
 import {
   TouchableOpacity,
   ActionSheetIOS,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 /**
@@ -19,10 +19,10 @@ class DeveloperMenu extends Component {
     const options = {
       clearState: 0,
       showLogin: 1,
-      cancel: 2
+      cancel: 2,
     };
 
-    const callback = async index => {
+    const callback = async (index) => {
       if (index === options.clearState) {
         await snapshot.clearSnapshot();
         console.warn('(╯°□°）╯︵ ┻━┻ \nState cleared, Cmd+R to reload the application now');
@@ -32,9 +32,9 @@ class DeveloperMenu extends Component {
     ActionSheetIOS.showActionSheetWithOptions({
       options: [
         'Clear state',
-        'Cancel'
+        'Cancel',
       ],
-      cancelButtonIndex: options.cancel
+      cancelButtonIndex: options.cancel,
     }, callback);
   }
 
@@ -47,7 +47,7 @@ class DeveloperMenu extends Component {
       <TouchableOpacity
         style={styles.circle}
         onPress={this.showDeveloperMenu}
-        />
+      />
     );
   }
 }
@@ -60,8 +60,8 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: '#fff'
-  }
+    backgroundColor: '#fff',
+  },
 });
 
 export default DeveloperMenu;

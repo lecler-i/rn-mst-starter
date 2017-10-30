@@ -1,4 +1,4 @@
-/*eslint-disable max-nested-callbacks, no-unused-expressions*/
+/* eslint-disable max-nested-callbacks, no-unused-expressions */
 
 import fetch from 'fetch-mock';
 import HttpError from 'standard-http-error';
@@ -10,7 +10,7 @@ const SIMPLE_ENDPOINT = '/endpoint';
 const ERROR_ENDPOINT = '/cant/touch/this';
 const PROTECTED_ENDPOINT = '/nothing/to/see/here';
 const FAILING_ENDPOINT = '/broken';
-const SIMPLE_RESPONSE = {foo: 'bar'};
+const SIMPLE_RESPONSE = { foo: 'bar' };
 
 describe('API', () => {
   beforeEach(() => {
@@ -19,10 +19,10 @@ describe('API', () => {
     // stub AsyncStorage.getItem
     require.requireActual('react-native').AsyncStorage.getItem = () => Promise.resolve(1);
     fetch
-      .mock(API_ROOT + SIMPLE_ENDPOINT, {status: 200, body: SIMPLE_RESPONSE})
-      .mock(API_ROOT + ERROR_ENDPOINT, {status: 400,body: {message: 'You did bad.'}})
-      .mock(API_ROOT + PROTECTED_ENDPOINT, {status: 403})
-      .mock(API_ROOT + FAILING_ENDPOINT, {status: 500}); // don't specify body to test default message
+      .mock(API_ROOT + SIMPLE_ENDPOINT, { status: 200, body: SIMPLE_RESPONSE })
+      .mock(API_ROOT + ERROR_ENDPOINT, { status: 400, body: { message: 'You did bad.' } })
+      .mock(API_ROOT + PROTECTED_ENDPOINT, { status: 403 })
+      .mock(API_ROOT + FAILING_ENDPOINT, { status: 500 }); // don't specify body to test default message
   });
 
   afterEach(() => {
@@ -31,8 +31,7 @@ describe('API', () => {
 
   // generate basic tests for basic HTTP methods
   for (const method of ['get', 'put', 'post', 'del']) {
-
-    const body = {foo: 'bar'};
+    const body = { foo: 'bar' };
 
     // create a function that calls the corresponding method on the API module
     const apiMethod = method === 'put' || method === 'post'
@@ -40,25 +39,24 @@ describe('API', () => {
       : path => api[method](path);
 
     describe(method, () => {
-
-      it('should fetch() the given endpoint', async() => {
+      it('should fetch() the given endpoint', async () => {
         await apiMethod(SIMPLE_ENDPOINT);
         expect(fetch.lastUrl()).toBe(`${API_ROOT}${SIMPLE_ENDPOINT}`);
       });
 
       if (method === 'put' || method === 'post') {
-        it('should send the body for PUT and POST requests', async() => {
+        it('should send the body for PUT and POST requests', async () => {
           await apiMethod(SIMPLE_ENDPOINT);
           expect(fetch.lastOptions().body).toBe(JSON.stringify(body));
         });
       }
 
-      it('should return the response body when calling a valid JSON endpoint', async() => {
+      it('should return the response body when calling a valid JSON endpoint', async () => {
         expect(await apiMethod(SIMPLE_ENDPOINT)).toEqual(SIMPLE_RESPONSE);
         expect(fetch.called()).toBe(true);
       });
 
-      it('should throw when endpoint returns HTTP 4xx error', async() => {
+      it('should throw when endpoint returns HTTP 4xx error', async () => {
         const error = await getError(() => apiMethod(ERROR_ENDPOINT));
         expect(error instanceof HttpError).toBe(true);
         expect(error.code).toBe(400);
@@ -66,7 +64,7 @@ describe('API', () => {
         expect(fetch.called()).toBe(true);
       });
 
-      it('should throw when server returns a HTTP 5xx error', async() => {
+      it('should throw when server returns a HTTP 5xx error', async () => {
         const error = await getError(() => apiMethod(FAILING_ENDPOINT));
         expect(error instanceof HttpError).toBe(true);
         expect(error.code).toBe(500);
@@ -77,23 +75,22 @@ describe('API', () => {
   }
 
   describe('url', () => {
-    it('generates a full url from a path using API_ROOT configuration value', async() => {
-      expect(api.url('foobar')).toEqual(API_ROOT + '/foobar');
+    it('generates a full url from a path using API_ROOT configuration value', async () => {
+      expect(api.url('foobar')).toEqual(`${API_ROOT}/foobar`);
     });
 
-    it('generates a full url with leading forward slash', async() => {
-      expect(api.url('/foobar')).toEqual(API_ROOT + '/foobar');
+    it('generates a full url with leading forward slash', async () => {
+      expect(api.url('/foobar')).toEqual(`${API_ROOT}/foobar`);
     });
   });
 
   describe('errors EventEmitter', () => {
-
     let spy400Errors;
     let spy403Errors;
     let spyAllErrors;
     const expectedArgs = {
       path: PROTECTED_ENDPOINT,
-      message: 'Forbidden'
+      message: 'Forbidden',
     };
 
     beforeEach(() => {
@@ -108,7 +105,7 @@ describe('API', () => {
       api.errors.off('*', spyAllErrors);
     });
 
-    it('notifies about errors on error-specific channel', async() => {
+    it('notifies about errors on error-specific channel', async () => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // 403 called, matching error code
@@ -116,7 +113,7 @@ describe('API', () => {
       expect(spy403Errors).toBeCalledWith(expectedArgs);
     });
 
-    it('notifies about errors on generic * channel', async() => {
+    it('notifies about errors on generic * channel', async () => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // always matches
@@ -124,7 +121,7 @@ describe('API', () => {
       expect(spyAllErrors).toBeCalledWith(expectedArgs, 403);
     });
 
-    it('doesn\'t notify about errors on other channels', async() => {
+    it('doesn\'t notify about errors on other channels', async () => {
       await getError(() => api.get(PROTECTED_ENDPOINT));
 
       // never called, unmatching error code

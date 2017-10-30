@@ -1,11 +1,10 @@
 import todos from '../todos';
 
 const testTodo = {
-  title: 'test'
+  title: 'test',
 };
 
 it('can create new todo', () => {
-
   expect(todos.todos.length).toBe(0);
 
   todos.addTodo(testTodo);

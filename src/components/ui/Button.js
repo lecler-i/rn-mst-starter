@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
   ViewPropTypes,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
 
 const systemButtonOpacity = 0.2;
@@ -19,14 +19,14 @@ export default class Button extends Component {
     loading: PropTypes.bool,
     disabled: PropTypes.bool,
     style: Text.propTypes.style,
-    styleDisabled: Text.propTypes.style
+    styleDisabled: Text.propTypes.style,
   };
 
   render() {
-    let touchableProps = {
-      activeOpacity: this._computeActiveOpacity()
+    const touchableProps = {
+      activeOpacity: this._computeActiveOpacity(),
     };
-    if (this.props.loading) {this.props.disabled = true;}
+    if (this.props.loading) { this.props.disabled = true; }
     if (!this.props.disabled) {
       touchableProps.onPress = this.props.onPress;
       touchableProps.onPressIn = this.props.onPressIn;
@@ -42,20 +42,21 @@ export default class Button extends Component {
         {...touchableProps}
         testID={this.props.testID}
         style={this.props.containerStyle}
-        accessibilityTraits='button'
-        accessibilityComponentType='button'>
+        accessibilityTraits="button"
+        accessibilityComponentType="button"
+      >
         {this.props.loading ? <ActivityIndicator /> : this.props.children}
       </TouchableOpacity>
     );
   }
 
   _renderGroupedChildren() {
-    let {disabled} = this.props;
-    let style = [
+    const { disabled } = this.props;
+    const style = [
       styles.text,
       disabled ? styles.disabledText : null,
       this.props.style,
-      disabled ? this.props.styleDisabled : null
+      disabled ? this.props.styleDisabled : null,
     ];
   }
 
@@ -74,14 +75,14 @@ const styles = StyleSheet.create({
     color: '#007aff',
     fontSize: 17,
     fontWeight: '500',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   disabledText: {
-    color: '#dcdcdc'
+    color: '#dcdcdc',
   },
   group: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

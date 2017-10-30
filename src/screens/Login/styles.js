@@ -1,5 +1,5 @@
 import {
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -7,12 +7,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   formWrapper: {
     alignSelf: 'stretch',
-    margin: 16
-  }
+    margin: 16,
+  },
 });
 
 export default styles;

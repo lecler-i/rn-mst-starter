@@ -1,16 +1,15 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   View,
-  ActivityIndicator
+  ActivityIndicator,
 } from 'react-native';
-import {Actions} from 'react-native-router-flux';
-import {inject} from 'mobx-react';
+import { Actions } from 'react-native-router-flux';
+import { inject } from 'mobx-react';
 
 import styles from './styles';
 
 @inject('Auth')
 class Splash extends Component {
-
   // componentDidMount() {
   // if (!this.props.Auth.loggedIn) {
   // Actions.auth();
@@ -22,7 +21,7 @@ class Splash extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size='large'/>
+        <ActivityIndicator size="large" />
       </View>
     );
   }
