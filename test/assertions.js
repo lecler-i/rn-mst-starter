@@ -1,4 +1,4 @@
-import {isArray, isFunction, isUndefined, isMatchWith} from 'lodash';
+import { isArray, isFunction, isUndefined, isMatchWith } from 'lodash';
 
 /**
  * Tests whether the passed Enzyme wrapper element has all the style
@@ -19,7 +19,6 @@ export function hasStyles(wrapper, expectedStyles) {
 
   // test that styles match spec
   return isMatchWith(appliedStyle, expectedStyles, (actualValue, expectedValue) => {
-
     // Splat means any value
     if (expectedValue === '*') {
       return !isUndefined(actualValue);

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Router, Tabs, Drawer, Scene, Stack, Lightbox, NavigationStore } from 'react-native-router-flux';
 import { observer, Provider } from 'mobx-react/native';
-import remotedev from 'mobx-remotedev';
 
 import stores from './stores';
 import configs from './configs';
