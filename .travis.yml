@@ -10,10 +10,13 @@ cache:
     - $HOME/.gradle/wrapper/
 env:
   - NODE_ENV='test'
+
+install:
+  - npm install -g codecov
+
 script:
   - cp env.example.js env.js
   - npm run lint
-  - npm test
   - npm run coverage
   - codecov
   # - npm run bundle:ios
