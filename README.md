@@ -6,13 +6,13 @@
 
 React Native Starter Kit based on [Pepperoni Starter Kit](http://getpepperoni.com)
 
-## tltr;
+## tldr;
 
 Sounds good and you just want to see how it works? Here is a quick start guide:
 
 ```
-git clone https://github.com/lecler-i/rn-mobx-starter-kit.git
-cd pepperoni-app-kit
+git clone https://github.com/lecler-i/rn-mst-starter.git
+cd rn-mst-starter
 yarn install
 yarn android / ios
 ```
@@ -24,9 +24,9 @@ yarn android / ios
 * :heavy_check_mark: Always up-to-date [React Native](https://facebook.github.io/react-native/) scaffolding
 * :heavy_check_mark: Modular and well-documented structure for application code
 * :heavy_check_mark: Mobx / MST for safe and simple state managment
-* :heavy_check_mark: `react-native-router-flux` for awesome navigation with 60fps transitions
+* :heavy_check_mark: `react-native-router-flux` for awesome navigation with `react-router v4`
+* :heavy_check_mark: Clean and testable service layer for interacting with RESTful APIs
 * :o: Disk-persisted application state caching for offline support and snappy startup performance
-* :o: Clean and testable service layer for interacting with RESTful APIs
 * :o: JSON Web Token authentication
 * :o: Built-in error handling and customizable error screens
 
@@ -37,8 +37,10 @@ yarn android / ios
 
 ### Development & Deployment Infrastructure
 
-* [Travis CI](https://travis-ci.org/futurice/pepperoni-app-kit) example [configuration](https://github.com/futurice/pepperoni-app-kit/blob/master/.travis.yml) for Android, iOS and Javascript tests.
-* :o: [Google Tag Manager](https://www.google.com/analytics/tag-manager/) analytics
+* Plop for Screens and Stores generators
+* [Travis CI](https://travis-ci.org/lecler-i/rn-mst-starte) continuous
+  testing and deployment
+* :o: Google Analytic / Sentry analytics
 
 
 ### Roadmap
@@ -46,7 +48,6 @@ yarn android / ios
 * **TODO** :star: [Microsoft Code Push](http://microsoft.github.io/code-push) for instant JavaScript and images update
 * **TODO** Crash reporting
 * **TODO** Android and iOS UI Testing with Calaba.sh?
-* **TODO** Feature flags?
 
 ## Development workflow
 
