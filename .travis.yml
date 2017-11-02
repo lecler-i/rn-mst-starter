@@ -13,6 +13,7 @@ env:
 
 install:
   - npm install -g codecov
+  - npm install
 
 script:
   - cp env.example.js env.js
