@@ -5,7 +5,7 @@ import { save } from '../utils/storage';
 
 const AppStore = types.model('AppStore', {
   apiUrl: types.maybe(types.string),
-  isLoading: types.boolean,
+  isLoading: types.optional(types.boolean, true),
 }).views(self => ({}))
   .actions(self => ({
     postProcessSnapshot: ({ apiUrl }) => ({ apiUrl }),
@@ -15,11 +15,11 @@ const AppStore = types.model('AppStore', {
     },
     loaded: () => {
       self.isLoading = false;
+      return true;
     },
   }));
 
 const instance = AppStore.create({
-  isLoading: true,
 });
 
 export default remotedev(instance);

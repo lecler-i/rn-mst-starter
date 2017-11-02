@@ -17,11 +17,11 @@ const AuthStore = types.model('AuthStore', {
 }))
   .actions(self => ({
     isLoggedIn: flow(function* isLoggedIn() {
-      if (AppStore.apiUrl && self.accessToken && (yield TTRSS.isLoggedIn())) {
+      console.log('Checking if is logged in', AppStore.apiUrl);
+      if (AppStore.apiUrl && self.accessToken && (yield TTRSS.isLoggedIn(self.accessToken))) {
         return true;
       }
       self.accessToken = null;
-
       if (self.username && self.password && (yield self.login())) {
         return true;
       }
@@ -35,7 +35,7 @@ const AuthStore = types.model('AuthStore', {
       if (payload) {
         AppStore.setApiUrl(payload.apiUrl);
         self.username = payload.username;
-        self.password = payload.password;
+        self.password = payload.passwordr;
       }
       if (!self.username || !self.password) {
         self.accessToken = null;

@@ -18,7 +18,7 @@ export default () => (
     <Router wrapBy={observer}>
       <Lightbox key="root">
         <Stack {...configs.AppConfig.navbarProps} headerMode="screen">
-          <Scene key="splash" intial on={() => startup().then(stores.isLoggedIn)} success="app" error="login" hideNavBar failure="auth" component={SplashScreen} />
+          <Scene key="splash" intial on={() => startup().then(stores.Auth.isLoggedIn)} success="app" error="login" hideNavBar failure="auth" component={SplashScreen} />
 
           <Stack key="auth" type="reset">
             <Scene key="login" hideNavBar component={LoginScreen} />

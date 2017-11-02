@@ -4,7 +4,7 @@ import stores from './stores/';
 import { load } from './utils/storage';
 
 const loadingPromises = Object.entries(stores).map(([key, store]) => load(key).then((data) => {
-  console.log('Loaded ', key, store, data);
+  console.log('Applying state for ', key, store, data);
   applySnapshot(store, data);
 }).catch(Promise.resolve));
 

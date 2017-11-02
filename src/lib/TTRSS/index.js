@@ -12,7 +12,7 @@ export const login = async (user, password) => {
   return post('/', { op: 'login', user, password }).then(handleResponse);
 };
 
-export const isLoggedIn = async sid => post('/', { op: 'isLoggedIn', sid }).then(console.log);
+export const isLoggedIn = async sid => post('/', { op: 'isLoggedIn', sid }).then(handleResponse).then((({ status }) => status));
 
 export default {
   login,
