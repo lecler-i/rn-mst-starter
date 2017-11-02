@@ -63,7 +63,7 @@ matrix:
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
 
-    allow_failures:
+  allow_failures:
     - language: objective-c
       os: osx
       stage: build
