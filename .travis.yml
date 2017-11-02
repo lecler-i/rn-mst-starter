@@ -75,5 +75,5 @@ matrix:
       xcode_scheme: ios/PepperoniAppTemplateTests
       script:
         - cd ios
-        - xcodebuild -scheme PepperoniAppTemplate -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
+        - xcodebuild -scheme ReactNativeBoilerplate -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
         - travis_retry xctool run-tests -scheme PepperoniAppTemplate -sdk iphonesimulator -launch-timeout 90  ONLY_ACTIVE_ARCH=NO
