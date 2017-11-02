@@ -4,6 +4,7 @@ node_js:
   - "7.1"
 sudo: false
 cache:
+  yarn: true
   directories:
     - $HOME/.yarn-cache
     - $HOME/.gradle/caches/
@@ -12,13 +13,13 @@ env:
   - NODE_ENV='test'
 
 install:
-  - npm install -g codecov
-  - npm install
+  - yarn global add codecov
+  - yarn
 
 script:
   - cp env.example.js env.js
-  - npm run lint || true
-  - npm run coverage
+  - yarn lint || true
+  - yarn coverage
   - codecov
   # - npm run bundle:ios
 
