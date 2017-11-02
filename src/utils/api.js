@@ -83,12 +83,12 @@ export async function request(method, path, body, suppressRedBox) {
 /**
  * Takes a relative path and makes it a full URL to API server
  */
-/* export function url(path) { */
-// const apiRoot = getConfiguration('API_ROOT');
-// return path.indexOf('/') === 0
-// ? apiRoot + path
-// : apiRoot + '/' + path;
-// }
+export function url(path) {
+  const apiRoot = 'http://ttrss.thomas.sh';
+  return path.indexOf('/') === 0
+    ? apiRoot + path
+    : `${apiRoot}/${path}`;
+}
 /*  */
 /**
  * Constructs and fires a HTTP request
@@ -100,7 +100,7 @@ async function sendRequest(method, endpoint, body) {
       ? { method, headers, body: JSON.stringify(body) }
       : { method, headers };
 
-    return timeout(fetch(endpoint, options), TIMEOUT);
+    return timeout(fetch(url(endpoint), options), TIMEOUT);
   } catch (e) {
     throw new Error(e);
   }
@@ -115,10 +115,9 @@ async function handleResponse(path, response) {
     console.log('Handling Response', status);
     // `fetch` promises resolve even if HTTP status indicates failure. Reroute
     // promise flow control to interpret error responses as failures
-    if (status != 200) {
+    if (status >= 400) {
       const message = await getErrorMessageSafely(response);
       const error = new HttpError(status, message);
-      console.log('Error msg :', message);
       // emit events on error channel, one for status-specific errors and other for all errors
       errors.emit(status.toString(), { path, message: error.message });
       errors.emit('*', { path, message: error.message }, status);
@@ -133,7 +132,6 @@ async function handleResponse(path, response) {
     if (body && body.status) {
       const message = body.content.error || 'UNKNOWN_ERROR';
       const error = new ApiError(message);
-      console.log('Error msg :', message);
       // emit events on error channel, one for status-specific errors and other for all errors
       errors.emit(status.toString(), { path, message: error.message });
       errors.emit('*', { path, message: error.message }, status);
@@ -143,7 +141,7 @@ async function handleResponse(path, response) {
     return {
       status: response.status,
       headers: response.headers,
-      body: responseBody ? JSON.parse(responseBody) : null,
+      body,
     };
   } catch (e) {
     throw e;
@@ -174,12 +172,12 @@ async function getErrorMessageSafely(response) {
     // Optimal case is JSON with a defined message property
     const payload = JSON.parse(body);
     console.log('Get error payload :', payload);
-    if (payload && payload.content && payload.content.error) {
-      return payload.content.error;
+    if (payload && payload.message) {
+      return payload.message;
     }
 
     // Should that fail, return the whole response body as text
-    return body;
+    return payload || body;
   } catch (e) {
     // Unreadable body, return whatever the server returned
     return response._bodyInit;
@@ -204,7 +202,7 @@ function timeout(promise, ms) {
 async function bodyOf(requestPromise) {
   try {
     const response = await requestPromise;
-    return response.body.content;
+    return response.body;
   } catch (e) {
     throw e;
   }
