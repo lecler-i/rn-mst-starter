@@ -1,7 +1,9 @@
 import AuthStore from '../Auth';
 
 const testAuth = {
-  title: 'test',
+  username: 'test',
+  password: 'test',
+  url: 'url',
 };
 
 it('testing auth store', async () => {
