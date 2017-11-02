@@ -23,6 +23,7 @@ script:
   # - npm run bundle:ios
 
 matrix:
+  fast_finish: true
   include:
     - language: android
       stage: build
@@ -62,7 +63,7 @@ matrix:
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
 
-
+    allow_failures:
     - language: objective-c
       os: osx
       stage: build
