@@ -4,19 +4,6 @@ import remotedev from 'mobx-remotedev';
 
 import TTRSS from '../lib/TTRSS';
 
-const persistStore = ({
-  accessToken, username, password, rememberMe,
-}) => {
-  return { lol: 'haha' };
-  if (!rememberMe) { return { rememberMe }; }
-  return {
-    rememberMe,
-    accessToken,
-    username,
-    password,
-  };
-};
-
 const AuthStore = types.model('AuthStore', {
   accessToken: types.maybe(types.string),
   username: types.maybe(types.string),
@@ -70,13 +57,10 @@ const AuthStore = types.model('AuthStore', {
   }));
 
 const instance = AuthStore.create({
-  username: 'tata',
-  password: 'prout',
 });
 
-observe(instance, 'accessToken', (change) => {
-  console.log('LastName changed to ', change.newValue);
-});
-
+/* observe(instance, 'accessToken', (change) => { */
+// });
+/*  */
 export default remotedev(instance);
 
