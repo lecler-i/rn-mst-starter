@@ -1,5 +1,7 @@
 import HttpError from 'standard-http-error';
 
+import stores from '../stores';
+
 const EventEmitter = require('event-emitter');
 
 const TIMEOUT = 6000;
@@ -84,7 +86,7 @@ export async function request(method, path, body, suppressRedBox) {
  * Takes a relative path and makes it a full URL to API server
  */
 export function url(path) {
-  const apiRoot = 'http://ttrss.thomas.sh';
+  const apiRoot = stores.AppStore.apiUrl;
   return path.indexOf('/') === 0
     ? apiRoot + path
     : `${apiRoot}/${path}`;
@@ -95,12 +97,13 @@ export function url(path) {
  */
 async function sendRequest(method, endpoint, body) {
   try {
+    const fullEndpoint = url(endpoint);
     const headers = getRequestHeaders(body);
     const options = body
       ? { method, headers, body: JSON.stringify(body) }
       : { method, headers };
-
-    return timeout(fetch(url(endpoint), options), TIMEOUT);
+    console.log('Sending request to :', fullEndpoint, method);
+    return timeout(fetch(fullEndpoint, options), TIMEOUT);
   } catch (e) {
     throw new Error(e);
   }
