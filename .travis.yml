@@ -76,4 +76,4 @@ matrix:
       script:
         - cd ios
         - xcodebuild -scheme ReactNativeBoilerplate -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO | xcpretty
-        - travis_retry xctool run-tests -scheme ReactNativeBoilerplate -sdk iphonesimulator -launch-timeout 90  ONLY_ACTIVE_ARCH=NO
+        # - travis_retry xctool run-tests -scheme ReactNativeBoilerplate -sdk iphonesimulator -launch-timeout 90  ONLY_ACTIVE_ARCH=NO

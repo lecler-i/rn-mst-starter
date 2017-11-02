@@ -1,4 +1,5 @@
 ## React Native Mobx StarterKit
+[![Build Status](https://travis-ci.org/lecler-i/rn-mst-starter.svg?branch=master)](https://travis-ci.org/lecler-i/rn-mst-starter)
 [![React Native](https://img.shields.io/badge/react%20native-0.49.3-brightgreen.svg)](https://github.com/facebook/react-nati)
 [![License](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/futurice/pepperoni-app-kit/blob/master/LICENSE)
 
