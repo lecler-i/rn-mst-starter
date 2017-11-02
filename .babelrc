@@ -1,5 +1,5 @@
 {
-  "presets": ["react-native"],
+  "presets": ["es2015", "react-native"],
   "plugins": [
     "transform-decorators-legacy",
     ["babel-plugin-root-import", {

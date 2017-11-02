@@ -3,7 +3,9 @@
 import fetch from 'fetch-mock';
 import HttpError from 'standard-http-error';
 
+import stores from '../../stores';
 import * as api from '../api';
+
 
 const API_ROOT = 'http://ttrss.thomas.sh';
 const SIMPLE_ENDPOINT = '/endpoint';
@@ -11,6 +13,8 @@ const ERROR_ENDPOINT = '/cant/touch/this';
 const PROTECTED_ENDPOINT = '/nothing/to/see/here';
 const FAILING_ENDPOINT = '/broken';
 const SIMPLE_RESPONSE = { foo: 'bar' };
+
+stores.AppStore.setApiUrl(API_ROOT);
 
 api.url = path => (`${API_ROOT}/${path.replace(/^\//, '')}`);
 

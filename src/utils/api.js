@@ -76,7 +76,7 @@ export async function request(method, path, body, suppressRedBox) {
     );
   } catch (error) {
     if (!suppressRedBox) {
-      logError(error, path, method);
+      // logError(error, path, method);
     }
     throw error;
   }
@@ -102,7 +102,6 @@ async function sendRequest(method, endpoint, body) {
     const options = body
       ? { method, headers, body: JSON.stringify(body) }
       : { method, headers };
-    console.log('Sending request to :', fullEndpoint, method);
     return timeout(fetch(fullEndpoint, options), TIMEOUT);
   } catch (e) {
     throw new Error(e);
@@ -115,7 +114,6 @@ async function sendRequest(method, endpoint, body) {
 async function handleResponse(path, response) {
   try {
     const status = response.status;
-    console.log('Handling Response', status);
     // `fetch` promises resolve even if HTTP status indicates failure. Reroute
     // promise flow control to interpret error responses as failures
     if (status >= 400) {
@@ -132,15 +130,6 @@ async function handleResponse(path, response) {
     const responseBody = await response.text();
     const body = responseBody ? JSON.parse(responseBody) : null;
 
-    if (body && body.status) {
-      const message = body.content.error || 'UNKNOWN_ERROR';
-      const error = new ApiError(message);
-      // emit events on error channel, one for status-specific errors and other for all errors
-      errors.emit(status.toString(), { path, message: error.message });
-      errors.emit('*', { path, message: error.message }, status);
-
-      throw error;
-    }
     return {
       status: response.status,
       headers: response.headers,
@@ -174,7 +163,6 @@ async function getErrorMessageSafely(response) {
 
     // Optimal case is JSON with a defined message property
     const payload = JSON.parse(body);
-    console.log('Get error payload :', payload);
     if (payload && payload.message) {
       return payload.message;
     }

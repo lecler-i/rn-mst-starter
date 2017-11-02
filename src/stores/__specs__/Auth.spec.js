@@ -8,7 +8,7 @@ const testAuth = {
   url: 'url',
 };
 
-describe('TTRSS', () => {
+describe('Auth Store', () => {
   it('isLoggedIn', async () => {
     fetch.mock('*', { loggedIn: false });
     expect(await AuthStore.isLoggedIn()).toBe(false);
