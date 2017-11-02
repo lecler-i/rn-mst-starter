@@ -2,6 +2,8 @@ import { types, flow, getSnapshot } from 'mobx-state-tree';
 import { autorun, observe } from 'mobx';
 import remotedev from 'mobx-remotedev';
 
+import AppStore from './App';
+import { save } from '../utils/storage';
 import TTRSS from '../lib/TTRSS';
 
 const AuthStore = types.model('AuthStore', {
@@ -15,7 +17,7 @@ const AuthStore = types.model('AuthStore', {
 }))
   .actions(self => ({
     isLoggedIn: flow(function* isLoggedIn() {
-      if (self.accessToken && 1/* Api.isLoggedIn() */) {
+      if (AppStore.apiUrl && self.accessToken && (yield TTRSS.isLoggedIn())) {
         return true;
       }
       self.accessToken = null;
@@ -31,6 +33,7 @@ const AuthStore = types.model('AuthStore', {
       self.isLoading = true;
       self.accessToken = null;
       if (payload) {
+        AppStore.setApiUrl(payload.apiUrl);
         self.username = payload.username;
         self.password = payload.password;
       }
@@ -44,6 +47,7 @@ const AuthStore = types.model('AuthStore', {
         const { session_id } = yield TTRSS.login(self.username, self.password);
         self.accessToken = session_id;
         self.isLoading = false;
+        save('Auth', getSnapshot(self));
         return true;
       } catch (e) {
         self.loginError = `api.error.${e.message}`;

@@ -2,6 +2,7 @@
 // import {AsyncStorage} from 'react-native';
 
 // ## Generated Stores Imports
+import AppStore from './App';
 import NavigationStore from './Navigation';
 import AuthStore from './Auth';
 
@@ -11,6 +12,7 @@ import Todos from './todos';
 
 const stores = {
   // ## Generated Stores Includes
+  AppStore,
   NavigationStore,
   Auth: AuthStore,
 

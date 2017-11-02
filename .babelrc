@@ -3,7 +3,8 @@
   "plugins": [
     "transform-decorators-legacy",
     ["babel-plugin-root-import", {
-      "rootPathSuffix": "~"
+      "rootPathSuffix": "~",
+      "rootPathPrefix": "src"
     }]
   ]
 }
