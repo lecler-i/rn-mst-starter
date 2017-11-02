@@ -2,7 +2,6 @@ import {types} from 'mobx-state-tree';
 import remotedev from 'mobx-remotedev';
 
 const {{properCase name}}Store = types.model('{{properCase name}}Store', {
-  name: types.string,
 }).views(self => {
   return {};
 }).actions(self => {
@@ -10,7 +9,6 @@ const {{properCase name}}Store = types.model('{{properCase name}}Store', {
 });
 
 const instance = {{properCase name}}Store.create({
-  name: 'Test',
 });
 
 export default remotedev(instance);

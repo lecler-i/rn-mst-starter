@@ -20,6 +20,7 @@
     "bundle": "yarn bundle:ios && yarn bundle:android",
     "bundle:ios": "node ./node_modules/react-native/local-cli/cli.js bundle --platform ios --entry-file index.js --bundle-output ios/main.jsbundle --dev=false --verbose",
     "bundle:android": "node ./node_modules/react-native/local-cli/cli.js bundle --platform android --entry-file index.js --bundle-output android/main.jsbundle --dev=false --verbose",
+    "generator": "plop",
     "test": "jest",
     "test:watch": "jest --watch",
     "lint": "eslint src test",
