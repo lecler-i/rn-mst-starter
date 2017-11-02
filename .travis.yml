@@ -15,12 +15,14 @@ script:
   - npm run lint
   - npm test
   - npm run coverage
-  - codecov``
+  - codecov
   # - npm run bundle:ios
 
 matrix:
   include:
     - language: android
+      stage: build
+
       os: linux
       jdk: oraclejdk8
       before_cache:
@@ -59,6 +61,7 @@ matrix:
 
     - language: objective-c
       os: osx
+      stage: build
       osx_image: xcode8.2
       node_js: false
       before_install:
